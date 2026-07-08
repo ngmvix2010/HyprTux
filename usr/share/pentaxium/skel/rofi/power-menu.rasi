@@ -1,0 +1,95 @@
+/* MACOS SPOTLIGHT LIKE DARK THEME FOR ROFI - POWER MENU MOD WITH ICONS */
+/* Author: Newman Sanchez (https://github.com/newmanls) */
+
+* {
+    font:   "Inter 11";
+
+    bg0:    #19191980;
+    bg1:    #7E7E7E80;
+    bg2:    #0860f2E6;
+
+    fg0:    #DEDEDE;
+    fg1:    #FFFFFF;
+    fg2:    #DEDEDE80;
+
+    background-color:   transparent;
+    text-color:         @fg0;
+
+    margin:     0;
+    padding:    0;
+    spacing:    0;
+}
+
+window {
+    background-color:   @bg0;
+
+    location:       center;
+    width:          400; 
+    border-radius:  20;
+}
+
+inputbar {
+    font:       "Inter 11";
+    padding:    14px;
+    spacing:    12px;
+    children:   [ entry ]; 
+}
+
+entry {
+    font:   "Inter Bold 12"; 
+    text-color: @fg1;
+    placeholder: "Choose your option:";
+    placeholder-color: @fg1;
+    enabled: true;
+    editable: false;
+}
+
+message {
+    border:             2px 0 0;
+    border-color:       @bg1;
+    background-color:   @bg1;
+}
+
+textbox {
+    padding:    8px 24px;
+}
+
+listview {
+    lines:      6; 
+    columns:    1;
+    fixed-height: true;
+    border:         1px 0 0;
+    border-color:   @bg1;
+}
+
+element {
+    padding:            10px 16px;
+    spacing:            16px;
+    background-color:   transparent;
+    /* Đem element-icon trở lại đây */
+    children:           [ element-icon, element-text ]; 
+}
+
+element normal active {
+    text-color: @bg2;
+}
+
+element alternate active {
+    text-color: @bg2;
+}
+
+element selected normal, element selected active {
+    background-color:   @bg2;
+    text-color:         @fg1;
+}
+
+/* Định dạng kích thước cho icon */
+element-icon {
+    size:   1.5em;
+    vertical-align: 0.5;
+}
+
+element-text {
+    text-color: inherit;
+    vertical-align: 0.5;
+}

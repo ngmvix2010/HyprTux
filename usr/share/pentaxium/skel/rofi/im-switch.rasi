@@ -1,0 +1,82 @@
+/* MACOS SPOTLIGHT LIKE DARK THEME FOR ROFI (CUSTOM FOR IM-SWITCH) */
+/* Modified for ngmvix2010_ */
+
+* {
+    font:   "Inter SemiBold 11";
+
+    bg0:    #19191980;
+    bg1:    #7E7E7E80;
+    bg2:    #0860f2E6; /* Màu xanh neon chủ đạo của bạn */
+
+    fg0:    #DEDEDE;
+    fg1:    #FFFFFF;
+    fg2:    #DEDEDE80;
+
+    background-color:   transparent;
+    text-color:         @fg0;
+
+    margin:     0;
+    padding:    0;
+    spacing:    0;
+}
+
+window {
+    background-color:   @bg0;
+    location:           center;
+    width:              300px; /* Thu nhỏ chiều rộng lại cho vừa menu IME */
+    border-radius:      20px;
+    border:             1px;
+    border-color:       #7E7E7E33;
+}
+
+inputbar {
+    padding:    12px 16px;
+    spacing:    12px;
+    background-color:   #00000033; /* Làm tối nhẹ vùng header */
+    /* Thay đổi cấu trúc: icon chữ -> Text hiển thị trạng thái */
+    children:   [ textbox-prompt-colon, prompt ]; 
+}
+
+/* Biến icon kính lúp thành khối hiển thị chữ viết tắt EN/VI */
+textbox-prompt-colon {
+    expand:             false;
+    str:                "⚙"; /* Icon hệ thống nhỏ hoặc bạn có thể để trống */
+    text-color:         @bg2;
+    font:               "Inter Bold 12";
+    vertical-align:     0.5;
+}
+
+/* Đây là nơi hiển thị nội dung tùy biến từ script truyền vào */
+prompt {
+    font:               "Inter Bold 11";
+    text-color:         @fg1;
+    vertical-align:     0.5;
+}
+
+listview {
+    lines:              2; /* Chỉ cần 2 dòng cho English & Unikey */
+    columns:            1;
+    fixed-height:       true;
+    cycle:              true;
+    border:             0px; /* Bỏ border thô giữa header và list */
+    padding:            6px;
+}
+
+element {
+    padding:            10px 14px;
+    spacing:            12px;
+    border-radius:      12px; /* Bo góc các option cho giống macOS style */
+    background-color:   transparent;
+    children:           [ element-text ]; /* Bỏ element-icon vì mình dùng text thuần */
+}
+
+/* Khi hover hoặc dùng phím mũi tên chọn -> Đổi sang màu xanh mượt */
+element selected normal, element selected active {
+    background-color:   @bg2;
+    text-color:         @fg1;
+}
+
+element-text {
+    text-color:         inherit;
+    vertical-align:     0.5;
+}

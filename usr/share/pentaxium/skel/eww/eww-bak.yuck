@@ -1,0 +1,162 @@
+;; ~/.config/eww/eww.yuck
+
+;; /* --------------- Define Variables --------------- */
+
+;; ----- Network -----
+(defpoll wifi-name :interval "5s"
+  "nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2")
+
+;; ----- Brightness -----
+(defpoll current-brightness :interval "100ms"
+  "brightnessctl -m | cut -d, -f4 | tr -d '%'")
+
+;; ----- Volume -----
+(defpoll current-volume :interval "100ms"
+  "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2 * 100)}'")
+
+;; ----- Music Status -----
+(defpoll music_status :interval "100ms"
+  "playerctl status 2>/dev/null || echo 'Stopped'")
+
+;; ----- Song Title -----
+(defpoll song_title :interval "1s"
+  "playerctl metadata --format '{{ title }}'")
+
+;; ----- Song Artist -----
+(defpoll song_artist :interval "1s"
+  "bash -c 'artist=\$(playerctl metadata --format \"{{ artist }}\"); echo \${artist:-unknown}'")
+
+;; ----- Media Art -----
+(defpoll player_art :interval "1s"
+  "~/.config/eww/modules/player-tn.sh")
+
+;; /* --------------- Desktop Widgets --------------- */
+
+;; ----- Not Defined Yet -----
+
+;; /* --------------- Desktop Compoments --------------- */
+
+;; ----- Control Center -----
+(defwindow control_center
+    :monitor 0
+    :geometry (geometry :x "20px" 
+                        :y "20px" 
+                        :width "360px" 
+                        :anchor "top right")
+    :stacking "fg"
+    :exclusive false
+    :namespace "eww-control-center"
+    (cc_layout))
+
+(defwidget cc_layout []
+    (box :class "cc-container" :orientation "v" :space-evenly false :spacing 16
+
+        ;; Header
+        (box :class "header-row" :orientation "h" :space-evenly false :halign "end" :spacing 12
+            (button :class "icon-btn-small" "⏺")
+            (button :class "icon-btn-small" "✎")
+            (button :class "icon-btn-small" "⚙")
+        )
+
+        ;; Network & Music Row
+        (box :class "row" :orientation "h" :space-evenly true :spacing 16
+            (box :orientation "v" :space-evenly true :spacing 16
+                
+                ;; Wifi
+                (button :class "pill-btn" :onclick "nm-connection-editor &"
+                    (box :orientation "h" :space-evenly false :spacing 12
+                        (image :class "icon big-icon" :path "/home/ngmvix2010_/.icons/Colloid-Dark/places/16/folder-wifi.svg" :image-width 32 :image-height 32)
+                        (box :orientation "v" :halign "start" :valign "center"
+                            (label :class "title" :text "Wifi" :halign "start")
+                            (label :class "sub" :text "${wifi-name}" :halign "start")
+                        )
+                    )
+                )
+
+                ;; Bluetooth
+                (button :class "pill-btn" :onclick "blueman-manager &"
+                    (box :orientation "h" :space-evenly false :spacing 12
+                        (image :class "icon big-icon" :path "/home/ngmvix2010_/.icons/Colloid-Dark/devices/16/bluetooth.svg" :image-width 30 :image-height 30)
+                        (box :orientation "v" :halign "start" :valign "center"
+                            (label :class "title" :text "Bluetooth" :halign "start")
+                            (label :class "sub" :text "Turned off" :halign "start")
+                        )
+                    )
+                )
+            )
+            
+            ;; Music Player Box
+            (box :class "music-box" :orientation "v" :space-evenly false :spacing 8
+                (box :class "music-art" 
+                     :style "background-image: url('${player_art}');"
+                     :halign "start")
+
+                (box :orientation "v" :space-evenly false :halign "start"
+                  (label :class "title" :text {song_title != "" ? song_title : "No Song Playing"})
+                  (label :class "sub" :text {song_artist != "unknown" ? song_artist : "unknown"})
+                )
+                (box :class "music-controls" :orientation "h" :space-evenly true :spacing 8
+                    (button :onclick "playerctl previous" 
+                        (image :path "/home/ngmvix2010_/.icons/Colloid-Dark/actions/24/gtk-media-previous-ltr.svg"
+                               :image-width 16 
+                               :image-height 16))
+               
+                    (button :onclick "playerctl play-pause"
+                        (image :path {music_status == "Playing" ? 
+                                      "/home/ngmvix2010_/.icons/Colloid-Dark/actions/24/media-playback-pause-symbolic.svg" : 
+                                      "/home/ngmvix2010_/.icons/Colloid-Dark/actions/24/media-playback-start.svg"}
+                               :image-width {music_status == "Playing" ? 24 : 20} 
+                               :image-height {music_status == "Playing" ? 24 : 20}))
+               
+                    (button :onclick "playerctl next" 
+                        (image :path "/home/ngmvix2010_/.icons/Colloid-Dark/actions/24/gtk-media-next-ltr.svg"
+                               :image-width 16 
+                               :image-height 16))
+                )
+            )
+        )
+
+        ;; Sliders
+        (box :class "slider-container" :orientation "v" :space-evenly false :spacing 16
+            ;; Brightness
+            (box :class "slider-box" :orientation "h" :space-evenly false :spacing 12
+                (image :class "icon big-icon" :path "/home/ngmvix2010_/.icons/Colloid-Dark/status/symbolic/display-brightness-symbolic.svg" :image-width 20 :image-height 20)
+                (scale :class "cc-slider" 
+                       :min 0 
+                       :max 101 
+                       :value current-brightness ;; <--- Đổi ở đây
+                       :onchange "swayosd-client --brightness {}")
+            )
+            ;; Volume Slider
+            (box :class "slider-box" :orientation "h" :space-evenly false :spacing 12
+                (image :class "icon big-icon" :path "/home/ngmvix2010_/.icons/Colloid-Dark/status/22/audio-volume-high.svg" :image-width 26 :image-height 26)
+                (scale :class "cc-slider" 
+                        :min 0 
+                        :max 101 
+                        :value current-volume
+                        :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%") ;; <--- SỬA DÒNG NÀY
+            )
+        )
+
+        (box :class "grid-row" :orientation "h" :space-evenly true
+            (button :class "circle-btn active" 
+                (image :path "/home/ngmvix2010_/.icons/Colloid-Dark/actions/24/network-connect.svg" :image-width 30 :image-height 30))
+            (button :class "circle-btn" 
+                (image :path "/home/ngmvix2010_/.icons/Colloid-Dark/actions/24/blueman-plugin.svg" :image-width 30 :image-height 30))
+            (button :class "circle-btn" 
+                (image :path "/home/ngmvix2010_/.icons/Colloid-Dark/actions/24/flashlight-on.svg" :image-width 30 :image-height 30))
+            (button :class "circle-btn" 
+                (image :path "/home/ngmvix2010_/.icons/Colloid-Dark/actions/24/notifications.svg" :image-width 30 :image-height 30))
+        )
+        (box :class "grid-row" :orientation "h" :space-evenly true
+            (button :class "circle-btn" 
+                (image :path "/home/ngmvix2010_/.icons/Colloid-Dark/actions/24/brightness-high.svg" :image-width 30 :image-height 30))
+            (button :class "circle-btn" 
+                (image :path "/home/ngmvix2010_/.icons/Colloid-Dark/actions/24/color-mode-invert-image.svg" :image-width 30 :image-height 30))
+            (button :class "circle-btn" 
+                (image :path "/home/ngmvix2010_/.icons/Colloid-Dark/actions/24/audio-volume-high.svg" :image-width 30 :image-height 30))
+            (button :class "circle-btn" 
+                (image :path "/home/ngmvix2010_/.icons/Colloid-Dark/actions/24/settings.svg" :image-width 30 :image-height 30))
+        )
+    )
+)

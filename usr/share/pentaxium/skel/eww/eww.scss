@@ -1,0 +1,148 @@
+// ~/.config/eww/eww.scss
+// General styles for eww widgets
+* {
+    all: unset;
+    font-family: "Inter SemiBold";
+}
+
+// Color Variables
+$bg-color: rgba(19, 19, 19, 0.21);
+$surface: rgba(174, 174, 174, 0.20);
+$surface-hover: rgba(151, 151, 151, 0.4);
+$text-main: #ffffff;
+$text-sub: #a0a0a0;
+$accent: rgba(255, 255, 255, 1.0);
+$active: rgba(255, 255, 255, 0.358);
+$radius-large: 999px;
+$radius-small: 30px;
+$radius-medium: 20px;
+$radius-circle: 50%;
+
+// General Styles
+.cc-container {
+    background-color: $bg-color;
+    border-radius: 36px;
+    padding: 24px;
+    color: $text-main;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.icon-btn-small {
+    background-color: $surface;
+    border-radius: $radius-circle;
+    padding: 8px 12px;
+    min-width: 18px;
+    min-height: 32px;
+    font-size: 20px;
+    transition: 0.2s ease;
+}
+.icon-btn-small:hover { background-color: $surface-hover; }
+
+.pill-btn {
+    background-color: $surface;
+    border-radius: $radius-large;
+    padding: 16px;
+    transition: 0.2s ease;
+}
+.pill-btn:hover { background-color: $surface-hover; }
+
+.title { font-weight: bold; font-size: 14px; margin-bottom: 2px; }
+.sub { font-size: 11px; color: $text-sub; }
+.big-icon { font-size: 20px; }
+
+.music-box {
+    background-color: $surface;
+    border-radius: $radius-small;
+    padding: 16px;
+}
+.music-icon { font-size: 24px; margin-bottom: 8px; }
+.music-controls { margin-top: 12px; font-size: 18px; }
+.music-controls button:hover { color: $text-sub; }
+
+.slider-box {
+    background-color: $surface;
+    border-radius: $radius-large;
+    padding: 14px 16px;
+}
+
+scale.cc-slider trough {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: $radius-large;
+    min-height: 36px;
+    min-width: 235px;
+}
+
+scale.cc-slider highlight {
+    background-color: $accent;
+    border-radius: $radius-large;
+}
+
+scale.cc-slider slider {
+    background-color: transparent;
+    min-width: 0px;
+    min-height: 0px;
+}
+
+.circle-btn {
+    background-color: $surface;
+    border-radius: $radius-circle;
+    min-width: 38px;
+    min-height: 68px;
+    font-size: 20px;
+    transition: 0.2s ease;
+    margin: 0 6px;
+}
+.circle-btn:hover { background-color: $surface-hover; }
+.circle-btn.active {
+    background-color: $active;
+    color: #1a1a1a;
+}
+
+.music-art {
+  min-width: 32px;
+  min-height: 32px;
+  
+  border-radius: 12px; 
+}
+
+// Dock
+
+.dock-container {
+    background-color: $bg-color;
+    border-radius: 20px;
+    padding: 4px;
+    color: $text-main;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dock-separator {
+    background-color: rgba(255, 255, 255, 0.2);
+    min-width: 2px;
+    min-height: 40px;
+    margin: 0 14px;
+}
+
+.dock-item {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0px;
+    margin: 0 0;
+}
+
+.dock-item.launchpad {
+    background: none;
+    border: none;
+    padding: 0 7px 0 7px;
+}
+
+.dock-item.dock-apps {
+    background: none;
+    border: none;
+    padding: 0 7px 0 7px;
+}
+
+.dock-item:hover {
+    background-color: $surface-hover;
+    border-radius: 15px;
+}

@@ -1,0 +1,67 @@
+{
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "height": 26,
+    // Thêm module custom/ime vào góc phải
+    "modules-left": ["custom/apple-arch", "hyprland/window"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": ["custom/ime", "custom/quick-settings", "clock", "custom/notification"],
+
+    // --- MODULES LEFT ---
+    "custom/apple-arch": {
+        "format": "<b>      ArchLinux</b>", 
+        "on-click": "rofi -show drun -theme ~/.config/rofi/spotlight-dark.rasi",
+        "tooltip": false,
+        "spacing": 5
+    },
+
+    "hyprland/workspaces": {
+       "format": "{icon}",
+       "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = "e-1" })'",
+       "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = "e-1" })'"
+    },
+
+    "hyprland/window": {
+        "format": "{class}",
+        "separate-outputs": true,
+        "rewrite": {
+            "": "Hyprland" 
+        }
+    },
+
+    // --- MODULES RIGHT ---
+    "tray": {
+        "icon-size": 16,
+        "spacing": 4, // Giảm khoảng cách giữa các icon trong tray từ 10 xuống 4
+        "on-click": "notify-send 'System Tray' 'Ứng dụng chạy ngầm đang hoạt động'"
+    },
+
+    // Module Input Method chạy script của ông
+    "custom/ime": {
+        "format": "  ", // Ông có thể đổi chữ này thành icon bàn phím nếu muốn
+        "on-click": "/home/ngmvix2010_/.local/share/hyprVix/switch_ime.sh",
+        "tooltip": false
+    },
+
+    "custom/quick-settings": {
+        "format": "Control Center", 
+        "on-click": "fabric-cli execute 'app.toggle_cc()'",
+        "tooltip": false
+    },
+
+    "clock": {
+        "format": "{:%a %d %b  %I:%M %p}", 
+        "on-click": "notify-send 'Calendar' 'Mở lịch và thông báo hệ thống'",
+        "tooltip": false
+    },
+
+    "custom/notification": {
+        "format": " ",
+        "on-click": "swaync-client -t -sw",
+        "tooltip": false
+    }
+}

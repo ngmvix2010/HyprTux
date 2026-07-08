@@ -1,0 +1,58 @@
+/* --- TỔNG QUAN WINDOW (ẨN ĐI ĐỂ TẠO DOCK ĐỘC LẬP) --- */
+window#waybar {
+    background-color: transparent; /* Xóa nền đen dài tràn màn hình */
+    border: none;
+    box-shadow: none;
+}
+
+/* --- ĐÂY MỚI LÀ THANH DOCK THẬT SỰ (TỰ CO GIÃN) --- */
+.modules-center {
+    background-color: rgba(20, 20, 20, 0.4); /* Đưa nền tối vào đây */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Đưa viền vào đây */
+    border-radius: 24px; /* Bo tròn chuẩn dock */
+    padding: 2px 10px;
+    /* Hiệu ứng đổ bóng cho giống dock xịn trên macOS */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4); 
+    /* Thêm backdrop-filter để làm mờ nền phía sau, chuẩn vị macOS */
+}
+
+/* --- HIỆU ỨNG NÚT LAUNCHPAD --- */
+#custom-launchpad {
+    background-image: url("/home/ngmvix2010_/.icons/Colloid-Dark/actions/symbolic/view-app-grid-symbolic.svg");
+    background-position: center;
+    background-repeat: no-repeat; /* SỬA LỖI: Trong CSS không có giá trị 'false', phải dùng 'no-repeat' */
+    background-size: 42px; /* TỐI ƯU: Icon 48px sẽ quá to so với thanh dock cao tầm 36-40px, đổi lại 20px cho vừa vặn */
+    font-size: 20px;
+    padding: 0px 12px;
+    margin: 4px;
+    border-radius: 18px;
+    color: #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+#custom-launchpad:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* --- CẤU HÌNH THEME CHO RỔ ICON APP (wlr/taskbar) --- */
+#taskbar button {
+    min-width: 36px;
+    min-height: 36px;
+    padding: 0px;
+    margin: 4px 2px;
+    border-radius: 16px;
+    transition: all 0.2s ease-in-out;
+    background-color: transparent; /* Đảm bảo nút không bị dính nền mặc định */
+    border: none;
+}
+
+#taskbar button:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Style riêng cho app đang active */
+#taskbar button.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid #ffffff; 
+    border-radius: 16px 16px 12px 12px;
+}

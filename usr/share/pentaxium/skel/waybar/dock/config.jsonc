@@ -1,0 +1,39 @@
+{
+    "layer": "top",
+    "position": "bottom",
+    "mode": "dock",
+    "exclusive": false,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "height": 64,
+    "margin-bottom": 6,
+
+    // Gom tất cả vào giữa để dock tụ lại một cụm gọn gàng
+    "modules-left": [],
+    "modules-center": ["custom/launchpad", "wlr/taskbar"],
+    "modules-right": [],
+
+    // Nút Launchpad mở Rofi
+    "custom/launchpad": {
+        "format": "   ",
+        "on-click": "rofi -show drun -theme ~/.config/rofi/launchpad.rasi",
+        "tooltip": false
+    },
+
+    // Module quản lý các icon ứng dụng (Pinned + Running apps)
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 48,
+        "icon-theme": "Colloid-Dark", // Khớp với bộ icon bạn đang dùng
+        "spacing": 6,
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "ignore-list": [],
+        "app-ids-mapping": {},
+        // Thêm các app muốn ghim cố định (Pinned) ở đây
+        "rewrite": {
+            "Firefox Web Browser": "Firefox"
+        }
+    }
+}
